@@ -106,9 +106,23 @@ alter the container directly.
 
 ## Usage
 
-Add the interfaces you want in `services.yaml`:
+There are two ways to use this bundle.
 
-<details>
+Those different ways of using the bundle can be either used in the
+context of a Symfony application or in the configuration of a bundle.
+
+### Adds all the aliases it can find
+
+```yaml
+services:
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Tests,Kernel.php}'
+        tags:
+            - { name: autowire.alias }
+```
+
+### Adds only specific services implementing specific interfaces only
 
 ```yaml
 services:
@@ -118,9 +132,13 @@ services:
                 - { name: autowire.alias }
 ```
 
-</details>
-
 Once it is done, do the following command to verify:
+
+```shell
+bin/console debug:container --tag=autowire.alias
+```
+
+Find all the new aliases related to Doctrine repositories:
 
 ```shell
 bin/console debug:container ObjectRepository
