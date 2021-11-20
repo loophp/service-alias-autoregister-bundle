@@ -95,20 +95,36 @@ final class MyTestController
 }
 ```
 
+That feature exists in Symfony but it is a manual procedure, see the
+documentation: https://symfony.com/doc/current/service_container.html#binding-arguments-by-name-or-type
+
 ## Installation
 
 ```shell
 composer require loophp/service-alias-autoregister-bundle
 ```
 
-There is no configuration to do, once installed, the bundle will
-alter the container directly.
+See the next section to learn how to enable it in your project.
 
 ## Usage
 
-Add the interfaces you want in `services.yaml`:
+There are two ways to use this bundle.
 
-<details>
+Those different ways of using the bundle can be either used in the
+context of a Symfony application or in the configuration of a bundle.
+
+### Adds all the aliases it can find
+
+```yaml
+services:
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Tests,Kernel.php}'
+        tags:
+            - { name: autowire.alias }
+```
+
+### Adds only specific services implementing specific interfaces only
 
 ```yaml
 services:
@@ -118,13 +134,21 @@ services:
                 - { name: autowire.alias }
 ```
 
-</details>
-
 Once it is done, do the following command to verify:
+
+```shell
+bin/console debug:container --tag=autowire.alias
+```
+
+Find all the new aliases related to Doctrine repositories:
 
 ```shell
 bin/console debug:container ObjectRepository
 ```
+
+## TODO
+
+* Fix name collision when two classes implementing the same interface have the same name but a different namespace.
 
 ## Contributing
 
