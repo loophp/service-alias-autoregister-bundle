@@ -11,3 +11,5 @@
 /benchmarks/
 /.vscode/
 /.php_cs.cache
+/var/
+/.phpunit.result.cache
