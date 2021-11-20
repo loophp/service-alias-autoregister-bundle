@@ -95,14 +95,16 @@ final class MyTestController
 }
 ```
 
+That feature exists in Symfony but it is a manual procedure, see the
+documentation: https://symfony.com/doc/current/service_container.html#binding-arguments-by-name-or-type
+
 ## Installation
 
 ```shell
 composer require loophp/service-alias-autoregister-bundle
 ```
 
-There is no configuration to do, once installed, the bundle will
-alter the container directly.
+See the next section to learn how to enable it in your project.
 
 ## Usage
 
