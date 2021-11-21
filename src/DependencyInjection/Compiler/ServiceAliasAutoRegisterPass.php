@@ -33,7 +33,7 @@ final class ServiceAliasAutoRegisterPass implements CompilerPassInterface
                 ->registerAliasForArgument(
                     $item->getFQDN(),
                     $item->getInterface(),
-                    $container->camelize($fqdnAlterer->alter($item))
+                    $container->camelize($fqdnAlterer->alter($item->getNamespacePart()))
                 );
         }
     }
