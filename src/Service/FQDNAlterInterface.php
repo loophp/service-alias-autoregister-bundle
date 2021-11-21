@@ -9,7 +9,12 @@ declare(strict_types=1);
 
 namespace loophp\ServiceAliasAutoRegisterBundle\Service;
 
+use loophp\ServiceAliasAutoRegisterBundle\Model\ServiceData;
+
 interface FQDNAlterInterface
 {
-    public function alter(array $item, callable $returnWith): string;
+    /**
+     * @param callable(string): string $returnWith
+     */
+    public function alter(ServiceData $item, callable $returnWith): string;
 }

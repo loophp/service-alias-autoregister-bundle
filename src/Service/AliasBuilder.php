@@ -11,6 +11,8 @@ namespace loophp\ServiceAliasAutoRegisterBundle\Service;
 
 use ArrayIterator;
 use Generator;
+use loophp\ServiceAliasAutoRegisterBundle\Model\ServiceData;
+
 use function array_slice;
 use function strlen;
 
@@ -18,15 +20,12 @@ final class AliasBuilder implements AliasBuilderInterface
 {
     public function alter(array $taggedServiceIds): Generator
     {
+        /** @var ArrayIterator<int, ServiceData> $aliases */
         $aliases = new ArrayIterator([]);
 
         foreach (array_keys($taggedServiceIds) as $fqdn) {
             foreach (class_implements($fqdn) as $interface) {
-                $aliases->append([
-                    'level' => 1,
-                    'interface' => $interface,
-                    'fqdn' => $fqdn,
-                ]);
+                $aliases->append((new ServiceData($fqdn, $interface, 1)));
             }
         }
 
@@ -36,15 +35,14 @@ final class AliasBuilder implements AliasBuilderInterface
                 array_slice(
                     explode(
                         '\\',
-                        $item['fqdn']
+                        $item->getFQDN()
                     ),
-                    -1 * $item['level']
+                    -1 * $item->getLevel()
                 )
             );
 
-            if (1 !== $this->countItemEndingWith($item['interface'], $namespacePart, $aliases->getArrayCopy())) {
-                ++$item['level'];
-                $aliases[$key] = $item;
+            if (1 !== $this->countItemEndingWith($item->getInterface(), $namespacePart, $aliases->getArrayCopy())) {
+                $aliases[$key] = $item->withLevel($item->getLevel() + 1);
                 $aliases->rewind();
             }
         }
@@ -52,6 +50,9 @@ final class AliasBuilder implements AliasBuilderInterface
         yield from $aliases;
     }
 
+    /**
+     * @param list<ServiceData> $data
+     */
     private function countItemEndingWith(string $interface, string $namespace, array $data = []): int
     {
         return iterator_count($this->findItemEndingWith($interface, $namespace, $data));
@@ -64,14 +65,17 @@ final class AliasBuilder implements AliasBuilderInterface
         return 0 < $length ? substr($haystack, -$length) === $needle : true;
     }
 
+    /**
+     * @param list<ServiceData> $data
+     */
     private function findItemEndingWith(string $interface, string $namespace, array $data = []): Generator
     {
         foreach ($data as $item) {
-            if ($item['interface'] !== $interface) {
+            if ($item->getInterface() !== $interface) {
                 continue;
             }
 
-            if ($this->endsWith($item['fqdn'], $namespace)) {
+            if ($this->endsWith($item->getFQDN(), $namespace)) {
                 yield $item;
             }
         }
