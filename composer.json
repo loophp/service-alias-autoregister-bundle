@@ -1,19 +1,22 @@
 {
     "name": "loophp/service-alias-autoregister-bundle",
     "type": "symfony-bundle",
-    "description": "TODO",
-    "keywords": [],
+    "description": "Auto register services aliases in the Symfony container.",
+    "keywords": [
+        "symfony",
+        "bundle"
+    ],
     "license": "MIT",
     "require": {
         "php": ">= 7.1"
     },
     "require-dev": {
         "drupol/php-conventions": "^5",
-        "symfony/dependency-injection": "^5",
-        "symfony/http-kernel": "^5",
         "phpunit/phpunit": "^9.5",
-        "symfony/test-pack": "^1.0",
-        "symfony/framework-bundle": "^5.3"
+        "symfony/dependency-injection": "^5",
+        "symfony/framework-bundle": "^5.3",
+        "symfony/http-kernel": "^5",
+        "symfony/test-pack": "^1.0"
     },
     "autoload": {
         "psr-4": {
@@ -28,18 +31,12 @@
     "scripts": {
         "changelog-unreleased": "docker-compose run auto_changelog -c .auto-changelog -u",
         "changelog-version": "docker-compose run auto_changelog -c .auto-changelog -v",
-        "grumphp": "./vendor/bin/grumphp run",
-        "infection": "vendor/bin/infection run -j 2",
-        "phpspec": "vendor/bin/phpspec run -vvv --stop-on-failure"
+        "grumphp": "./vendor/bin/grumphp run"
     },
     "funding": [
         {
             "type": "github",
             "url": "https://github.com/drupol"
-        },
-        {
-            "type": "paypal",
-            "url": "https://www.paypal.me/drupol"
         }
     ]
 }

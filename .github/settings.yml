@@ -60,7 +60,7 @@ repository:
     allow_rebase_merge: true
     allow_squash_merge: true
     default_branch: main
-    description: "Auto register services implementing interfaces."
+    description: "Auto register services aliases in the Symfony container."
     topics: bundle
     has_downloads: true
     has_issues: true

@@ -16,6 +16,7 @@ use loophp\ServiceAliasAutoRegisterBundle\Model\ServiceData;
 use function count;
 use function strlen;
 
+// phpcs:disable Generic.Files.LineLength.TooLong
 final class AliasBuilder implements AliasBuilderInterface
 {
     public function alter(array $taggedServiceIds): Generator
@@ -31,7 +32,7 @@ final class AliasBuilder implements AliasBuilderInterface
             }
 
             foreach ($interfaces as $interface) {
-                $aliases->append((new ServiceData($fqdn, $interface, 1)));
+                $aliases->append((new ServiceData($fqdn, $interface)));
             }
         }
 
