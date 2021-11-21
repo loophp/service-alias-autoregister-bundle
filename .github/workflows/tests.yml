@@ -47,10 +47,4 @@ jobs:
               run: composer install --no-progress --prefer-dist --optimize-autoloader
 
             - name: Run Grumphp
-              run: vendor/bin/grumphp run --tasks=phpspec
-
-            - name: Send Scrutinizer data
-              run: |
-                  wget https://scrutinizer-ci.com/ocular.phar
-                  php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
-              continue-on-error: true
+              run: vendor/bin/grumphp run --tasks=phpunit
