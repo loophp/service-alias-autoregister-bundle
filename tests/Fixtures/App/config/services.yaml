@@ -11,4 +11,4 @@ services:
         exclude: '../src/{DependencyInjection,Entity,Tests,Kernel.php}'
         public: true
         tags:
-            - { name: autowire.alias }
+            - { name: autoregister.alias }
