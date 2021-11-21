@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace loophp\ServiceAliasAutoRegisterBundle\DependencyInjection\Compiler;
 
-use Closure;
 use loophp\ServiceAliasAutoRegisterBundle\Service\AliasBuilderInterface;
 use loophp\ServiceAliasAutoRegisterBundle\Service\FQDNAlterInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -34,7 +33,7 @@ final class ServiceAliasAutoRegisterPass implements CompilerPassInterface
                 ->registerAliasForArgument(
                     $item->getFQDN(),
                     $item->getInterface(),
-                    $fqdnAlterer->alter($item, Closure::fromCallable([$container, 'camelize']))
+                    $container->camelize($fqdnAlterer->alter($item))
                 );
         }
     }

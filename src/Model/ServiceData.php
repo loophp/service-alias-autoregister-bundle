@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace loophp\ServiceAliasAutoRegisterBundle\Model;
 
+use function array_slice;
+
 final class ServiceData
 {
     private string $fqdn;
@@ -37,6 +39,20 @@ final class ServiceData
     public function getLevel(): int
     {
         return $this->level;
+    }
+
+    public function getNamespacePart(): string
+    {
+        return implode(
+            '\\',
+            array_slice(
+                explode(
+                    '\\',
+                    $this->getFQDN()
+                ),
+                -1 * $this->getLevel()
+            )
+        );
     }
 
     public function withLevel(int $level): self

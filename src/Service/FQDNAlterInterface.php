@@ -13,8 +13,5 @@ use loophp\ServiceAliasAutoRegisterBundle\Model\ServiceData;
 
 interface FQDNAlterInterface
 {
-    /**
-     * @param callable(string): string $returnWith
-     */
-    public function alter(ServiceData $item, callable $returnWith): string;
+    public function alter(ServiceData $item): string;
 }
