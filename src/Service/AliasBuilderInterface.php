@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace loophp\ServiceAliasAutoRegisterBundle\Service;
 
-interface FQDNAlterInterface
+use Generator;
+
+interface AliasBuilderInterface
 {
-    public function alter(array $item, callable $returnWith): string;
+    public function alter(array $taggedServiceIds): Generator;
 }
