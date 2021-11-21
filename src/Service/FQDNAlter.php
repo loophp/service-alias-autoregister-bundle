@@ -9,19 +9,27 @@ declare(strict_types=1);
 
 namespace loophp\ServiceAliasAutoRegisterBundle\Service;
 
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use function array_slice;
 
 final class FQDNAlter implements FQDNAlterInterface
 {
-    private array $configuration;
-
-    public function __construct(ParameterBagInterface $parameterBag)
+    public function alter(array $item, callable $returnWith): string
     {
-        $this->configuration = $parameterBag->get('service_alias_auto_register');
-    }
-
-    public function alter(string $fqdn): string
-    {
-        return $fqdn;
+        return str_replace(
+            '_',
+            '',
+            $returnWith(
+                implode(
+                    '\\',
+                    array_slice(
+                        explode(
+                            '\\',
+                            $item['fqdn']
+                        ),
+                        -1 * $item['level']
+                    )
+                )
+            )
+        );
     }
 }

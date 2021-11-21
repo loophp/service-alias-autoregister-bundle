@@ -9,12 +9,11 @@ declare(strict_types=1);
 
 namespace loophp\ServiceAliasAutoRegisterBundle\DependencyInjection\Compiler;
 
-use ArrayIterator;
-use Generator;
+use Closure;
+use loophp\ServiceAliasAutoRegisterBundle\Service\AliasBuilderInterface;
+use loophp\ServiceAliasAutoRegisterBundle\Service\FQDNAlterInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use function array_slice;
-use function strlen;
 
 final class ServiceAliasAutoRegisterPass implements CompilerPassInterface
 {
@@ -22,82 +21,21 @@ final class ServiceAliasAutoRegisterPass implements CompilerPassInterface
 
     public function process(ContainerBuilder $container): void
     {
-        $taggedServices = $container->findTaggedServiceIds(ServiceAliasAutoRegisterPass::TAG);
+        /** @var AliasBuilderInterface $aliasBuilder */
+        $aliasBuilder = $container->get(AliasBuilderInterface::class);
 
-        $data = new ArrayIterator([]);
+        /** @var FQDNAlterInterface $fqdnAlterer */
+        $fqdnAlterer = $container->get(FQDNAlterInterface::class);
 
-        foreach (array_keys($taggedServices) as $fqdn) {
-            foreach (class_implements($fqdn) as $interface) {
-                $data->append([
-                    'level' => 1,
-                    'interface' => $interface,
-                    'fqdn' => $fqdn,
-                ]);
-            }
-        }
+        $taggedServiceIds = $container->findTaggedServiceIds(ServiceAliasAutoRegisterPass::TAG);
 
-        foreach ($data as $key => $item) {
-            $namespacePart = implode(
-                '\\',
-                array_slice(
-                    explode(
-                        '\\',
-                        $item['fqdn']
-                    ),
-                    -1 * $item['level']
-                )
-            );
-
-            if (1 !== $this->countItemEndingWith($namespacePart, $data->getArrayCopy())) {
-                ++$item['level'];
-                $data[$key] = $item;
-                $data->rewind();
-            }
-        }
-
-        foreach ($data as $item) {
+        foreach ($aliasBuilder->alter($taggedServiceIds) as $item) {
             $container
                 ->registerAliasForArgument(
                     $item['fqdn'],
                     $item['interface'],
-                    str_replace(
-                        '_',
-                        '',
-                        $container->camelize(
-                            implode(
-                                '\\',
-                                array_slice(
-                                    explode(
-                                        '\\',
-                                        $item['fqdn']
-                                    ),
-                                    -1 * $item['level']
-                                )
-                            )
-                        )
-                    )
+                    $fqdnAlterer->alter($item, Closure::fromCallable([$container, 'camelize']))
                 );
-        }
-    }
-
-    private function countItemEndingWith(string $namespace, array $data = []): int
-    {
-        return iterator_count($this->findItemEndingWith($namespace, $data));
-    }
-
-    private function endsWith(string $haystack, string $needle): bool
-    {
-        $length = strlen($needle);
-
-        return 0 < $length ? substr($haystack, -$length) === $needle : true;
-    }
-
-    private function findItemEndingWith(string $namespace, array $data = []): Generator
-    {
-        foreach ($data as $item) {
-            if ($this->endsWith($item['fqdn'], $namespace)) {
-                yield $item;
-            }
         }
     }
 }
