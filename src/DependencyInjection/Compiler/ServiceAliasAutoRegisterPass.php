@@ -37,6 +37,10 @@ final class ServiceAliasAutoRegisterPass implements CompilerPassInterface
                 continue;
             }
 
+            if ([] !== $parameters['whitelist'] && !in_array($item->getInterface(), $parameters['whitelist'], true)) {
+                continue;
+            }
+
             $container
                 ->registerAliasForArgument(
                     $item->getFQDN(),

@@ -162,6 +162,7 @@ You can configure this bundle by creating a configuration file in your applicati
 
 ```yaml
 service_alias_auto_register:
+    whitelist: ~
     blacklist:
         - Countable
         - Psr\Log\LoggerAwareInterface
@@ -170,7 +171,8 @@ service_alias_auto_register:
 
 The configuration keys that are available:
 
-- `blacklist`: Let you configure a list of interface to ignore, the default value is an empty array.
+- `whitelist`: Let you configure a list of interface to use. Empty the list to whitelist them all.
+- `blacklist`: Let you configure a list of interface to ignore. Default is empty array. It takes precedence on the `whitelist`.
 
 ## Contributing
 
