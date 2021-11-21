@@ -13,7 +13,7 @@ use ArrayIterator;
 use Generator;
 use loophp\ServiceAliasAutoRegisterBundle\Model\ServiceData;
 
-use function array_slice;
+use function count;
 use function strlen;
 
 final class AliasBuilder implements AliasBuilderInterface
@@ -36,18 +36,7 @@ final class AliasBuilder implements AliasBuilderInterface
         }
 
         foreach ($aliases as $key => $item) {
-            $namespacePart = implode(
-                '\\',
-                array_slice(
-                    explode(
-                        '\\',
-                        $item->getFQDN()
-                    ),
-                    -1 * $item->getLevel()
-                )
-            );
-
-            if (1 !== $this->countItemEndingWith($item->getInterface(), $namespacePart, $aliases->getArrayCopy())) {
+            if (1 !== $this->countItemEndingWith($item, $aliases->getArrayCopy())) {
                 $aliases[$key] = $item->withLevel($item->getLevel() + 1);
                 $aliases->rewind();
             }
@@ -59,9 +48,17 @@ final class AliasBuilder implements AliasBuilderInterface
     /**
      * @param list<ServiceData> $data
      */
-    private function countItemEndingWith(string $interface, string $namespace, array $data = []): int
+    private function countItemEndingWith(ServiceData $serviceDataSelected, array $data = []): int
     {
-        return iterator_count($this->findItemEndingWith($interface, $namespace, $data));
+        return count(
+            $this->findItemEndingWith(
+                $serviceDataSelected->getNamespacePart(),
+                array_filter(
+                    $data,
+                    static fn (ServiceData $serviceData): bool => $serviceData->getInterface() === $serviceDataSelected->getInterface()
+                )
+            )
+        );
     }
 
     private function endsWith(string $haystack, string $needle): bool
@@ -74,18 +71,13 @@ final class AliasBuilder implements AliasBuilderInterface
     /**
      * @param list<ServiceData> $data
      *
-     * @return Generator<int, ServiceData>
+     * @return array<int, ServiceData>
      */
-    private function findItemEndingWith(string $interface, string $namespace, array $data = []): Generator
+    private function findItemEndingWith(string $namespace, array $data = []): array
     {
-        foreach ($data as $item) {
-            if ($item->getInterface() !== $interface) {
-                continue;
-            }
-
-            if ($this->endsWith($item->getFQDN(), $namespace)) {
-                yield $item;
-            }
-        }
+        return array_filter(
+            $data,
+            fn (ServiceData $serviceData): bool => $this->endsWith($serviceData->getFQDN(), $namespace)
+        );
     }
 }
