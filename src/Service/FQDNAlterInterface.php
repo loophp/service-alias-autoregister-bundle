@@ -9,9 +9,7 @@ declare(strict_types=1);
 
 namespace loophp\ServiceAliasAutoRegisterBundle\Service;
 
-use loophp\ServiceAliasAutoRegisterBundle\Model\ServiceData;
-
 interface FQDNAlterInterface
 {
-    public function alter(ServiceData $item): string;
+    public function alter(string $namespacePart): string;
 }

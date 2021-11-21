@@ -9,12 +9,10 @@ declare(strict_types=1);
 
 namespace loophp\ServiceAliasAutoRegisterBundle\Service;
 
-use loophp\ServiceAliasAutoRegisterBundle\Model\ServiceData;
-
 final class FQDNAlter implements FQDNAlterInterface
 {
-    public function alter(ServiceData $item): string
+    public function alter(string $namespacePart): string
     {
-        return str_replace('_', '', $item->getNamespacePart());
+        return str_replace('_', '', $namespacePart);
     }
 }
