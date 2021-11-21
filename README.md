@@ -11,22 +11,35 @@ A bundle for Symfony 5.
 
 ## Description
 
-This bundle will declare new aliases in the Symfony container.
+The [S.O.L.I.D. principles][41] are a set of five design principles intended to make
+software designs more understandable, flexible, and maintainable.
 
-Those new aliases are created if your services implements interfaces.
+One of these principles is the [Open-Closed Principle][42], which promotes the use
+of interfaces instead of concrete implementations.
+
+In Symfony, when injecting services, we usually rely on concrete service implementations
+rather than using an interface. This makes our code less flexible and sometimes harder to
+test.
+
+This issue can be fixed in Symfony by [adding aliases][50] in the container.
+Sadly, you have to do it manually and for each class.
+
+Then, in order to fix this issue and improve this behavior, this bundle will declare new
+aliases in the Symfony container.
+
+Aliases are automatically created when the discovered services implements interfaces.
 
 If a service implements 3 interfaces, 3 new aliases are created in the container.
 
-Aliases are created using the service FQDN, ensuring uniqueness.
+Aliases are automatically created using the service's class FQDN, when the discovered
+services implements one or many interfaces.
 
-This way you can inject services using interfaces and named parameters
-instead of specific implementations.
+Aliases let you inject services using interfaces and named parameters
+instead of specific implementations and thus, fix the [Open-Closed Principle][42] that we
+usually do not follow.
 
-In order to adhere to [S.O.L.I.D. principles][41] in your code, and especially
-the [Open-Closed Principle][42], we have to use interfaces or abstracted classes
-when injecting services.
-
-Usually we do not respect that principle and we inject an concrete implementation directly:
+The following examples are showing an existing situation, as you can see, we do not respect
+that principle and we inject an concrete implementation directly:
 
 ```php
 <?php
@@ -39,6 +52,7 @@ use App\Repository\UserRepository;
 
 final class MyTestController
 {
+    // Here we inject a concrete implementation of a Doctrine repository.
     public function __invoke(UserRepository $userRepository): Response
     {
         // Do stuff.
@@ -46,7 +60,8 @@ final class MyTestController
 }
 ```
 
-This bundle fix that. It inject the proper service based on its parameter name.
+When the bundle is enabled, you can inject the repository using an interface,
+using a specific parameter name.
 
 ```php
 <?php
@@ -59,6 +74,8 @@ use Doctrine\Persistence\ObjectRepository;
 
 final class MyTestController
 {
+    // Here we inject the UserRepository (which implements ObjectRepository)
+    // using the variable which has been created from the UserRepository class name.
     public function __invoke(ObjectRepository $userRepository): Response
     {
         // Do stuff.
@@ -66,8 +83,7 @@ final class MyTestController
 }
 ```
 
-We can even do better by injecting it in the constructor. Then we can use the interface when injecting,
-and we can use the implementation in the property. Best of both world.
+We can even do better by injecting it in the constructor. Then we can use the interface when injecting, and we can use the implementation in the property. Best of both world.
 
 ```php
 <?php
@@ -95,9 +111,6 @@ final class MyTestController
 }
 ```
 
-That feature exists in Symfony but it is a manual procedure, see the
-documentation: https://symfony.com/doc/current/service_container.html#binding-arguments-by-name-or-type
-
 ## Installation
 
 ```shell
@@ -108,10 +121,7 @@ See the next section to learn how to enable it in your project.
 
 ## Usage
 
-There are two ways to use this bundle.
-
-Those different ways of using the bundle can be either used in the
-context of a Symfony application or in the configuration of a bundle.
+The bundle can be enabled by just adding a specific tag: `autoregister.alias`
 
 ### Adds all the aliases it can find
 
@@ -140,7 +150,7 @@ Once it is done, do the following command to verify:
 bin/console debug:container --tag=autowire.alias
 ```
 
-Find all the new aliases related to Doctrine repositories:
+Another example: find all the new aliases for Doctrine repositories:
 
 ```shell
 bin/console debug:container ObjectRepository
@@ -185,3 +195,4 @@ For more detailed changelogs, please check [the release changelogs][45].
 [47]: https://github.com/loophp/service-alias-autoregister-bundle/blob/master/CHANGELOG.md
 [48]: https://packagist.org/packages/symfony/maker-bundle
 [49]: https://packagist.org/packages/doctrine/persistence
+[50]: https://symfony.com/doc/current/service_container.html#binding-arguments-by-name-or-type
