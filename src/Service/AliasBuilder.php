@@ -24,7 +24,13 @@ final class AliasBuilder implements AliasBuilderInterface
         $aliases = new ArrayIterator([]);
 
         foreach (array_keys($taggedServiceIds) as $fqdn) {
-            foreach (class_implements($fqdn) as $interface) {
+            $interfaces = class_implements($fqdn);
+
+            if (false === $interfaces) {
+                continue;
+            }
+
+            foreach ($interfaces as $interface) {
                 $aliases->append((new ServiceData($fqdn, $interface, 1)));
             }
         }
@@ -67,6 +73,8 @@ final class AliasBuilder implements AliasBuilderInterface
 
     /**
      * @param list<ServiceData> $data
+     *
+     * @return Generator<int, ServiceData>
      */
     private function findItemEndingWith(string $interface, string $namespace, array $data = []): Generator
     {
