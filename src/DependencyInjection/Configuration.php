@@ -9,8 +9,11 @@ declare(strict_types=1);
 
 namespace loophp\ServiceAliasAutoRegisterBundle\DependencyInjection;
 
+use Countable;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
 final class Configuration implements ConfigurationInterface
 {
@@ -22,6 +25,14 @@ final class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
+            ->children()
+            ->arrayNode('blacklist')
+            ->prototype('scalar')->end()
+            ->defaultValue([
+                LoggerInterface::class,
+                Countable::class,
+                ServiceSubscriberInterface::class,
+            ])
             ->end();
 
         return $treeBuilder;

@@ -14,6 +14,8 @@ use loophp\ServiceAliasAutoRegisterBundle\Service\FQDNAlterInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
+use function in_array;
+
 final class ServiceAliasAutoRegisterPass implements CompilerPassInterface
 {
     public const TAG = 'autoregister.alias';
@@ -26,9 +28,15 @@ final class ServiceAliasAutoRegisterPass implements CompilerPassInterface
         /** @var FQDNAlterInterface $fqdnAlterer */
         $fqdnAlterer = $container->get(FQDNAlterInterface::class);
 
+        $parameters = $container->getParameter('service_alias_auto_register');
+
         $taggedServiceIds = $container->findTaggedServiceIds(ServiceAliasAutoRegisterPass::TAG);
 
         foreach ($aliasBuilder->alter($taggedServiceIds) as $item) {
+            if (in_array($item->getInterface(), $parameters['blacklist'], true)) {
+                continue;
+            }
+
             $container
                 ->registerAliasForArgument(
                     $item->getFQDN(),
