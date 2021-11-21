@@ -146,10 +146,6 @@ Find all the new aliases related to Doctrine repositories:
 bin/console debug:container ObjectRepository
 ```
 
-## TODO
-
-* Fix name collision when two classes implementing the same interface have the same name but a different namespace.
-
 ## Contributing
 
 Feel free to contribute by sending Github pull requests. I'm quite responsive :-)

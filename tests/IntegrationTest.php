@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace tests\loophp\ServiceAliasAutoRegisterBundle;
 
+use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -17,7 +18,23 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 final class IntegrationTest extends KernelTestCase
 {
-    public function testSomething()
+    public function getAliases(): Generator
+    {
+        yield ['tests\App\Service\FooInterface $c'];
+
+        yield ['tests\App\Service\FooInterface $fooA'];
+
+        yield ['tests\App\Service\FooInterface $barA'];
+
+        yield ['tests\App\Service\FooInterface $barFooB'];
+
+        yield ['tests\App\Service\FooInterface $serviceFooB'];
+    }
+
+    /**
+     * @dataProvider getAliases
+     */
+    public function testSomething(string $serviceAlias)
     {
         // (1) boot the Symfony kernel
         self::bootKernel();
@@ -25,7 +42,6 @@ final class IntegrationTest extends KernelTestCase
         // (2) use static::getContainer() to access the service container
         $container = self::getContainer();
 
-        self::assertTrue($container->has('tests\App\Service\FooInterface $a'));
-        self::assertTrue($container->has('tests\App\Service\FooInterface $b'));
+        self::assertTrue($container->has($serviceAlias));
     }
 }
