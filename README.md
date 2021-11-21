@@ -131,7 +131,7 @@ services:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Tests,Kernel.php}'
         tags:
-            - { name: autowire.alias }
+            - { name: autoregister.alias }
 ```
 
 ### Adds only specific services implementing specific interfaces only
@@ -141,13 +141,13 @@ services:
     _instanceof:
         Doctrine\Persistence\ObjectRepository:
             tags:
-                - { name: autowire.alias }
+                - { name: autoregister.alias }
 ```
 
 Once it is done, do the following command to verify:
 
 ```shell
-bin/console debug:container --tag=autowire.alias
+bin/console debug:container --tag=autoregister.alias
 ```
 
 Another example: find all the new aliases for Doctrine repositories:
