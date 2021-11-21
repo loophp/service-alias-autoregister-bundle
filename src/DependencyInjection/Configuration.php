@@ -23,9 +23,14 @@ final class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+            ->arrayNode('whitelist')
+            ->prototype('scalar')->end()
+            ->defaultValue([])
+            ->end()
             ->arrayNode('blacklist')
             ->prototype('scalar')->end()
             ->defaultValue([])
+            ->end()
             ->end();
 
         return $treeBuilder;
