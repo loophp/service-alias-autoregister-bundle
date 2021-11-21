@@ -32,8 +32,8 @@ final class ServiceAliasAutoRegisterPass implements CompilerPassInterface
         foreach ($aliasBuilder->alter($taggedServiceIds) as $item) {
             $container
                 ->registerAliasForArgument(
-                    $item['fqdn'],
-                    $item['interface'],
+                    $item->getFQDN(),
+                    $item->getInterface(),
                     $fqdnAlterer->alter($item, Closure::fromCallable([$container, 'camelize']))
                 );
         }
