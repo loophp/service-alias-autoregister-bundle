@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 final class ServiceAliasAutoRegisterPass implements CompilerPassInterface
 {
-    public const TAG = 'autowire.alias';
+    public const TAG = 'autoregister.alias';
 
     public function process(ContainerBuilder $container): void
     {
