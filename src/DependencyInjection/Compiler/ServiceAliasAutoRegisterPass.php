@@ -32,20 +32,20 @@ final class ServiceAliasAutoRegisterPass implements CompilerPassInterface
 
         $taggedServiceIds = $container->findTaggedServiceIds(ServiceAliasAutoRegisterPass::TAG);
 
-        foreach ($aliasBuilder->alter($taggedServiceIds) as $item) {
-            if (in_array($item->getInterface(), $parameters['blacklist'], true)) {
+        foreach ($aliasBuilder->alter($taggedServiceIds) as [$fqdn, $interface, $namespacePart]) {
+            if (in_array($interface, $parameters['blacklist'], true)) {
                 continue;
             }
 
-            if ([] !== $parameters['whitelist'] && !in_array($item->getInterface(), $parameters['whitelist'], true)) {
+            if ([] !== $parameters['whitelist'] && !in_array($interface, $parameters['whitelist'], true)) {
                 continue;
             }
 
             $container
                 ->registerAliasForArgument(
-                    $item->getFQDN(),
-                    $item->getInterface(),
-                    $container->camelize($fqdnAlterer->alter($item->getNamespacePart()))
+                    $fqdn,
+                    $interface,
+                    $container->camelize($fqdnAlterer->alter($namespacePart))
                 );
         }
     }
