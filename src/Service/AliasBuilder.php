@@ -43,7 +43,9 @@ final class AliasBuilder implements AliasBuilderInterface
             }
         }
 
-        yield from $aliases;
+        foreach ($aliases as $alias) {
+            yield [$alias->getFQDN(), $alias->getInterface(), $alias->getNamespacePart()];
+        }
     }
 
     /**
