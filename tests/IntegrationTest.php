@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
  * @internal
- * @coversNothing
+ * @covers \loophp\ServiceAliasAutoRegisterBundle
  */
 final class IntegrationTest extends KernelTestCase
 {
