@@ -1,14 +1,20 @@
 {
     "name": "loophp/service-alias-autoregister-bundle",
-    "type": "symfony-bundle",
     "description": "Auto register services aliases in the Symfony container.",
+    "license": "MIT",
+    "type": "symfony-bundle",
     "keywords": [
         "symfony",
         "bundle"
     ],
-    "license": "MIT",
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/drupol"
+        }
+    ],
     "require": {
-        "php": ">= 7.1"
+        "php": ">= 7.4"
     },
     "require-dev": {
         "drupol/php-conventions": "^5",
@@ -28,15 +34,17 @@
             "tests\\App\\": "tests/Fixtures/App/src"
         }
     },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "phpstan/extension-installer": true,
+            "phpro/grumphp": true,
+            "ergebnis/composer-normalize": true
+        }
+    },
     "scripts": {
         "changelog-unreleased": "docker-compose run auto_changelog -c .auto-changelog -u",
         "changelog-version": "docker-compose run auto_changelog -c .auto-changelog -v",
         "grumphp": "./vendor/bin/grumphp run"
-    },
-    "funding": [
-        {
-            "type": "github",
-            "url": "https://github.com/drupol"
-        }
-    ]
+    }
 }
