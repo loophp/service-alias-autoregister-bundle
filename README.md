@@ -3,11 +3,10 @@
  [![Total Downloads][total downloads]][1]
  [![License][license]][1]
  [![Donate!][donate github]][5]
- [![Donate!][donate paypal]][6]
 
 # Service Alias Auto Register
 
-A bundle for Symfony 5.
+A bundle for Symfony.
 
 ## Description
 
@@ -176,10 +175,9 @@ The configuration keys that are available:
 
 ## Contributing
 
-Feel free to contribute by sending Github pull requests. I'm quite responsive :-)
+Feel free to contribute by sending Github pull requests.
 
-If you can't contribute to the code, you can also sponsor me on [Github][5] or
-[Paypal][6].
+If you can't contribute to the code, you can also sponsor me on [Github][5].
 
 ## Changelog
 
@@ -193,7 +191,6 @@ For more detailed changelogs, please check [the release changelogs][45].
 [total downloads]: https://img.shields.io/packagist/dt/loophp/service-alias-autoregister-bundle.svg?style=flat-square
 [license]: https://img.shields.io/packagist/l/loophp/service-alias-autoregister-bundle.svg?style=flat-square
 [donate github]: https://img.shields.io/badge/Sponsor-Github-brightgreen.svg?style=flat-square
-[donate paypal]: https://img.shields.io/badge/Sponsor-Paypal-brightgreen.svg?style=flat-square
 [34]: https://github.com/loophp/service-alias-autoregister-bundle/issues
 [2]: https://github.com/loophp/service-alias-autoregister-bundle/actions
 [35]: http://www.phpspec.net/
@@ -202,7 +199,6 @@ For more detailed changelogs, please check [the release changelogs][45].
 [38]: https://github.com/phpstan/phpstan
 [39]: https://github.com/vimeo/psalm
 [5]: https://github.com/sponsors/drupol
-[6]: https://www.paypal.me/drupol
 [40]: https://packagist.org/packages/doctrine/doctrine-bundle
 [41]: https://en.wikipedia.org/wiki/SOLID
 [42]: https://en.wikipedia.org/wiki/Open%E2%80%93closed_principle
