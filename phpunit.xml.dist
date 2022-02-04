@@ -1,42 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
-<phpunit
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
-  backupGlobals="false"
-  colors="true"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="./vendor/autoload.php"
+         colors="true"
+         executionOrder="random"
+         beStrictAboutChangesToGlobalState="true"
+         beStrictAboutOutputDuringTests="false"
+         beStrictAboutCoversAnnotation="true"
+         forceCoversAnnotation="false"
+         failOnWarning="true"
+         failOnRisky="true"
+         failOnEmptyTestSuite="true"
+         verbose="true"
 >
-  <coverage processUncoveredFiles="true">
-    <include>
-      <directory suffix=".php">src</directory>
-    </include>
-  </coverage>
-  <php>
-    <ini name="error_reporting" value="-1"/>
-    <server name="KERNEL_DIR" value="tests/Fixtures/App/" />
-    <server name="KERNEL_CLASS" value="tests\App\Kernel" />
-    <server name="SHELL_VERBOSITY" value="-1" />
+    <testsuites>
+      <testsuite name="Project Test Suite">
+        <directory>tests/</directory>
+      </testsuite>
+    </testsuites>
 
-    <!-- ###+ symfony/framework-bundle ### -->
-    <env name="APP_ENV" value="dev"/>
-    <env name="APP_SECRET" value="a82794aa0495c5d5203399cacc37909a"/>
-    <!-- ###- symfony/framework-bundle ### -->
-  </php>
-  <testsuites>
-    <testsuite name="Project Test Suite">
-      <directory>tests/</directory>
-    </testsuite>
-  </testsuites>
-  <!-- Run `composer require symfony/phpunit-bridge` before enabling this extension -->
-  <!--
-    <listeners>
-        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
-    </listeners>
-    -->
-  <!-- Run `composer require symfony/panther` before enabling this extension -->
-  <!--
-    <extensions>
-        <extension class="Symfony\Component\Panther\ServerExtension" />
-    </extensions>
-    -->
+    <php>
+      <ini name="error_reporting" value="-1"/>
+      <server name="KERNEL_DIR" value="tests/Fixtures/App/" />
+      <server name="KERNEL_CLASS" value="tests\App\Kernel" />
+      <server name="SHELL_VERBOSITY" value="-1" />
+
+      <!-- ###+ symfony/framework-bundle ### -->
+      <env name="APP_ENV" value="dev"/>
+      <env name="APP_SECRET" value="a82794aa0495c5d5203399cacc37909a"/>
+      <!-- ###- symfony/framework-bundle ### -->
+    </php>
+
+    <coverage pathCoverage="true" processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+        <report>
+            <xml outputDirectory="build/logs/coverage/coverage-xml"/>
+            <html outputDirectory="build/logs/coverage/html-coverage"/>
+            <clover outputFile="build/logs/coverage/clover.xml"/>
+        </report>
+    </coverage>
+
+    <logging>
+        <junit outputFile="build/logs/coverage/junit.xml"/>
+    </logging>
 </phpunit>
