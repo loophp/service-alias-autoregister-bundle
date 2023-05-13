@@ -10,8 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 /**
  * @internal
  *
- * @covers \loophp\ServiceAliasAutoRegisterBundle\Service\AliasBuilder
- * @covers \loophp\ServiceAliasAutoRegisterBundle\Service\FQDNAlter
+ * @coversDefaultClass \loophp\ServiceAliasAutoRegisterBundle
  */
 final class IntegrationTest extends KernelTestCase
 {
@@ -31,7 +30,7 @@ final class IntegrationTest extends KernelTestCase
     /**
      * @dataProvider somethingProvider
      */
-    public function testSomething(string $serviceAlias)
+    public function testSomething(string $serviceAlias): void
     {
         // (1) boot the Symfony kernel
         self::bootKernel();
