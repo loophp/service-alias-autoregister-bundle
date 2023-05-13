@@ -1,8 +1,6 @@
 [![Latest Stable Version][latest stable version]][1]
- [![GitHub stars][github stars]][1]
- [![Total Downloads][total downloads]][1]
- [![License][license]][1]
- [![Donate!][donate github]][5]
+[![GitHub stars][github stars]][1] [![Total Downloads][total downloads]][1]
+[![License][license]][1] [![Donate!][donate github]][5]
 
 # Service Alias Auto Register
 
@@ -10,35 +8,38 @@ A bundle for Symfony.
 
 ## Description
 
-The [S.O.L.I.D. principles][41] are a set of five design principles intended to make
-software designs more understandable, flexible, and maintainable.
+The [S.O.L.I.D. principles][41] are a quintet of design guidelines aimed at
+enhancing the clarity, flexibility, and maintainability of software designs.
+Among these is the [Open-Closed Principle][42], which advocates for the use of
+interfaces over concrete implementations.
 
-One of these principles is the [Open-Closed Principle][42], which promotes the use
-of interfaces instead of concrete implementations.
+In Symfony, the usual practice is to depend on concrete service implementations
+when injecting services, as opposed to utilizing an interface. Unfortunately,
+this approach compromises our code's flexibility and occasionally complicates
+testing.
 
-In Symfony, when injecting services, we usually rely on concrete service implementations
-rather than using an interface. This makes our code less flexible and sometimes harder to
-test.
+Fortunately, this limitation can be overcome in Symfony by [manually introducing
+aliases][50] in the container for each class, a method that enhances flexibility
+and testing capabilities.
 
-This issue can be fixed in Symfony by [adding aliases][50] in the container.
-Sadly, you have to do it manually and for each class.
+To rectify this issue and augment this practice, this bundle will declare new
+aliases in the Symfony container. Consequently, when a discovered service
+implements interfaces, aliases are automatically generated. For example, if a
+service implements three interfaces, the container will automatically create
+three new corresponding aliases.
 
-Then, in order to fix this issue and improve this behavior, this bundle will declare new
-aliases in the Symfony container.
+These aliases are automatically created using the Fully Qualified Domain Name
+(FQDN) of the service's class when the discovered services implement one or
+several interfaces.
 
-Aliases are automatically created when the discovered services implements interfaces.
+Leveraging aliases allows the injection of services using interfaces and named
+parameters instead of specific implementations, thereby addressing the often
+neglected Open-Closed Principle. In this way, our code becomes more adherent to
+S.O.L.I.D. principles, specifically the Open-Closed Principle, and hence more
+robust and easier to manage.
 
-If a service implements 3 interfaces, 3 new aliases are created in the container.
-
-Aliases are automatically created using the service's class FQDN, when the discovered
-services implements one or many interfaces.
-
-Aliases let you inject services using interfaces and named parameters
-instead of specific implementations and thus, fix the [Open-Closed Principle][42] that we
-usually do not follow.
-
-The following examples are showing an existing situation, as you can see, we do not respect
-that principle and we inject an concrete implementation directly:
+The following examples are showing an existing situation, as you can see, we do
+not respect that principle and we inject an concrete implementation directly:
 
 ```php
 <?php
@@ -82,7 +83,9 @@ final class MyTestController
 }
 ```
 
-We can even do better by injecting it in the constructor. Then we can use the interface when injecting, and we can use the implementation in the property. Best of both world.
+We can even do better by injecting it in the constructor. Then we can use the
+interface when injecting, and we can use the implementation in the property.
+Best of both world.
 
 ```php
 <?php
@@ -126,21 +129,21 @@ The bundle can be enabled by just adding a specific tag: `autoregister.alias`
 
 ```yaml
 services:
-    App\:
-        resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Tests,Kernel.php}'
-        tags:
-            - { name: autoregister.alias }
+  App\:
+    resource: "../src/*"
+    exclude: "../src/{DependencyInjection,Entity,Tests,Kernel.php}"
+    tags:
+      - { name: autoregister.alias }
 ```
 
 ### Adds only specific services implementing specific interfaces only
 
 ```yaml
 services:
-    _instanceof:
-        Doctrine\Persistence\ObjectRepository:
-            tags:
-                - { name: autoregister.alias }
+  _instanceof:
+    Doctrine\Persistence\ObjectRepository:
+      tags:
+        - { name: autoregister.alias }
 ```
 
 Once it is done, do the following command to verify:
@@ -157,21 +160,24 @@ bin/console debug:container ObjectRepository
 
 ### Configure the bundle
 
-You can configure this bundle by creating a configuration file in your application.
+You can configure this bundle by creating a configuration file in your
+application.
 
 ```yaml
 service_alias_auto_register:
-    whitelist: ~
-    blacklist:
-        - Countable
-        - Psr\Log\LoggerAwareInterface
-        - Symfony\Contracts\Service\ServiceSubscriberInterface
+  whitelist: ~
+  blacklist:
+    - Countable
+    - Psr\Log\LoggerAwareInterface
+    - Symfony\Contracts\Service\ServiceSubscriberInterface
 ```
 
 The configuration keys that are available:
 
-- `whitelist`: Let you configure a list of interface to use. Empty the list to whitelist them all.
-- `blacklist`: Let you configure a list of interface to ignore. Default is empty array. It takes precedence on the `whitelist`.
+- `whitelist`: Let you configure a list of interface to use. Empty the list to
+  whitelist them all.
+- `blacklist`: Let you configure a list of interface to ignore. Default is empty
+  array. It takes precedence on the `whitelist`.
 
 ## Contributing
 
@@ -186,11 +192,16 @@ See [CHANGELOG.md][47] for a changelog based on [git commits][46].
 For more detailed changelogs, please check [the release changelogs][45].
 
 [1]: https://packagist.org/packages/loophp/service-alias-autoregister-bundle
-[latest stable version]: https://img.shields.io/packagist/v/loophp/service-alias-autoregister-bundle.svg?style=flat-square
-[github stars]: https://img.shields.io/github/stars/loophp/service-alias-autoregister-bundle.svg?style=flat-square
-[total downloads]: https://img.shields.io/packagist/dt/loophp/service-alias-autoregister-bundle.svg?style=flat-square
-[license]: https://img.shields.io/packagist/l/loophp/service-alias-autoregister-bundle.svg?style=flat-square
-[donate github]: https://img.shields.io/badge/Sponsor-Github-brightgreen.svg?style=flat-square
+[latest stable version]:
+  https://img.shields.io/packagist/v/loophp/service-alias-autoregister-bundle.svg?style=flat-square
+[github stars]:
+  https://img.shields.io/github/stars/loophp/service-alias-autoregister-bundle.svg?style=flat-square
+[total downloads]:
+  https://img.shields.io/packagist/dt/loophp/service-alias-autoregister-bundle.svg?style=flat-square
+[license]:
+  https://img.shields.io/packagist/l/loophp/service-alias-autoregister-bundle.svg?style=flat-square
+[donate github]:
+  https://img.shields.io/badge/Sponsor-Github-brightgreen.svg?style=flat-square
 [34]: https://github.com/loophp/service-alias-autoregister-bundle/issues
 [2]: https://github.com/loophp/service-alias-autoregister-bundle/actions
 [35]: http://www.phpspec.net/
@@ -203,10 +214,13 @@ For more detailed changelogs, please check [the release changelogs][45].
 [41]: https://en.wikipedia.org/wiki/SOLID
 [42]: https://en.wikipedia.org/wiki/Open%E2%80%93closed_principle
 [43]: https://github.com/symfony/maker-bundle/pull/887
-[44]: https://tomasvotruba.com/blog/2017/10/16/how-to-use-repository-with-doctrine-as-service-in-symfony/
+[44]:
+  https://tomasvotruba.com/blog/2017/10/16/how-to-use-repository-with-doctrine-as-service-in-symfony/
 [45]: https://github.com/loophp/service-alias-autoregister-bundle/releases
 [46]: https://github.com/loophp/service-alias-autoregister-bundle/commits/master
-[47]: https://github.com/loophp/service-alias-autoregister-bundle/blob/master/CHANGELOG.md
+[47]:
+  https://github.com/loophp/service-alias-autoregister-bundle/blob/master/CHANGELOG.md
 [48]: https://packagist.org/packages/symfony/maker-bundle
 [49]: https://packagist.org/packages/doctrine/persistence
-[50]: https://symfony.com/doc/current/service_container.html#binding-arguments-by-name-or-type
+[50]:
+  https://symfony.com/doc/current/service_container.html#binding-arguments-by-name-or-type

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * For the full copyright and license information, please view
- * the LICENSE file that was distributed with this source code.
- */
-
 declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
@@ -14,7 +9,7 @@ use loophp\ServiceAliasAutoRegisterBundle\Service\AliasBuilderInterface;
 use loophp\ServiceAliasAutoRegisterBundle\Service\FQDNAlter;
 use loophp\ServiceAliasAutoRegisterBundle\Service\FQDNAlterInterface;
 
-return static function (ContainerConfigurator $container) {
+return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
     $services

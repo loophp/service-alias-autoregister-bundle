@@ -1,10 +1,5 @@
 <?php
 
-/**
- * For the full copyright and license information, please view
- * the LICENSE file that was distributed with this source code.
- */
-
 declare(strict_types=1);
 
 namespace loophp\ServiceAliasAutoRegisterBundle\DependencyInjection\Compiler;
@@ -28,6 +23,7 @@ final class ServiceAliasAutoRegisterPass implements CompilerPassInterface
         /** @var FQDNAlterInterface $fqdnAlterer */
         $fqdnAlterer = $container->get(FQDNAlterInterface::class);
 
+        /** @var array{blacklist: array<int, string>, whitelist: array<int, string>} $parameters */
         $parameters = $container->getParameter('service_alias_auto_register');
 
         $taggedServiceIds = $container->findTaggedServiceIds(ServiceAliasAutoRegisterPass::TAG);

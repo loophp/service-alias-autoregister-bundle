@@ -14,11 +14,12 @@
         }
     ],
     "require": {
-        "php": ">= 7.4"
+        "php": ">= 8.1"
     },
     "require-dev": {
         "drupol/php-conventions": "^5",
         "phpunit/phpunit": "^9.5",
+        "rector/rector": "^0.16.0",
         "symfony/dependency-injection": "^5",
         "symfony/framework-bundle": "^5.3",
         "symfony/http-kernel": "^5",
@@ -43,8 +44,8 @@
         }
     },
     "scripts": {
-        "changelog-unreleased": "docker-compose run auto_changelog -c .auto-changelog -u",
-        "changelog-version": "docker-compose run auto_changelog -c .auto-changelog -v",
+        "changelog-unreleased": "auto-changelog -c .auto-changelog -u",
+        "changelog-version": "auto-changelog -c .auto-changelog -v",
         "grumphp": "./vendor/bin/grumphp run"
     }
 }

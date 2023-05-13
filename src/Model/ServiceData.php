@@ -1,10 +1,5 @@
 <?php
 
-/**
- * For the full copyright and license information, please view
- * the LICENSE file that was distributed with this source code.
- */
-
 declare(strict_types=1);
 
 namespace loophp\ServiceAliasAutoRegisterBundle\Model;
@@ -13,17 +8,11 @@ use function array_slice;
 
 final class ServiceData
 {
-    private string $fqdn;
-
-    private string $interface;
-
-    private int $level = 1;
-
-    public function __construct(string $fqdn, string $interface, int $level = 1)
-    {
-        $this->fqdn = $fqdn;
-        $this->interface = $interface;
-        $this->level = $level;
+    public function __construct(
+        private readonly string $fqdn,
+        private readonly string $interface,
+        private int $level = 1
+    ) {
     }
 
     public function getFQDN(): string
