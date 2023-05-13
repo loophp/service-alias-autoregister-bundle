@@ -5,3 +5,4 @@ framework:
         utf8: true
     secrets: false
     annotations: true
+    http_method_override: false
