@@ -15,12 +15,11 @@ final class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
-    public function registerBundles()
+    public function registerBundles(): iterable
     {
-        return [
-            new ServiceAliasAutoRegisterBundle(),
-            new FrameworkBundle(),
-        ];
+        yield new ServiceAliasAutoRegisterBundle();
+
+        yield new FrameworkBundle();
     }
 
     protected function configureContainer(ContainerConfigurator $container): void

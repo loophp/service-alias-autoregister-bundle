@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 final class IntegrationTest extends KernelTestCase
 {
-    public function getAliases(): Generator
+    public static function somethingProvider(): Generator
     {
         yield ['tests\App\Service\FooInterface $c'];
 
@@ -29,7 +29,7 @@ final class IntegrationTest extends KernelTestCase
     }
 
     /**
-     * @dataProvider getAliases
+     * @dataProvider somethingProvider
      */
     public function testSomething(string $serviceAlias)
     {
