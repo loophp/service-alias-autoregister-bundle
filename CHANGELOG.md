@@ -5,10 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0](https://github.com/loophp/service-alias-autoregister-bundle/compare/0.0.1...1.0.0)
+## [1.0.1](https://github.com/loophp/service-alias-autoregister-bundle/compare/1.0.0...1.0.1)
+
+### Merged
+
+- chore(deps): Bump actions/stale from 7 to 8 [`#36`](https://github.com/loophp/service-alias-autoregister-bundle/pull/36)
+- chore(deps): update actions/stale action to v7 [`#30`](https://github.com/loophp/service-alias-autoregister-bundle/pull/30)
+- chore(deps): update actions/stale action to v6 [`#24`](https://github.com/loophp/service-alias-autoregister-bundle/pull/24)
+- Configure Renovate [`#22`](https://github.com/loophp/service-alias-autoregister-bundle/pull/22)
+- chore(deps): Bump shivammathur/setup-php from 2.18.1 to 2.22.0 [`#21`](https://github.com/loophp/service-alias-autoregister-bundle/pull/21)
+- chore(deps): Bump shivammathur/setup-php from 2.18.0 to 2.18.1 [`#12`](https://github.com/loophp/service-alias-autoregister-bundle/pull/12)
+- chore(deps): Bump actions/stale from 4 to 5 [`#11`](https://github.com/loophp/service-alias-autoregister-bundle/pull/11)
+- chore(deps): Bump actions/checkout from 2.4.0 to 3 [`#7`](https://github.com/loophp/service-alias-autoregister-bundle/pull/7)
+- chore(deps): Bump shivammathur/setup-php from 2.17.0 to 2.18.0 [`#10`](https://github.com/loophp/service-alias-autoregister-bundle/pull/10)
+- chore(deps): Bump actions/cache from 2.1.7 to 3 [`#9`](https://github.com/loophp/service-alias-autoregister-bundle/pull/9)
+- chore(deps): Bump shivammathur/setup-php from 2.16.0 to 2.17.0 [`#6`](https://github.com/loophp/service-alias-autoregister-bundle/pull/6)
 
 ### Commits
 
+- ci: cleanup [`7d5fe59`](https://github.com/loophp/service-alias-autoregister-bundle/commit/7d5fe59c562fdcf289ee67abfe82ef171e31a810)
+- trigger tests [`eeb64da`](https://github.com/loophp/service-alias-autoregister-bundle/commit/eeb64da1bd4e28d25ee4b2825095a71c6eed203b)
+- trigger tests [`b869013`](https://github.com/loophp/service-alias-autoregister-bundle/commit/b8690130c5cc1da1aaf05c0c5437207eaf6f711d)
+- tests: add `http_method_override` [`110bcbd`](https://github.com/loophp/service-alias-autoregister-bundle/commit/110bcbd1f84a326edace01037e1fc0ec9ac6ea51)
+- tests: update annotation [`f9c4602`](https://github.com/loophp/service-alias-autoregister-bundle/commit/f9c46021320800f03eec78c24f1858199eb82c50)
+- cs: autofix code style [`098dba5`](https://github.com/loophp/service-alias-autoregister-bundle/commit/098dba5ac2bfd960e5ebb93b6cd821efa052c322)
+- ci: modernize ci [`f3607d7`](https://github.com/loophp/service-alias-autoregister-bundle/commit/f3607d719dfe834bc3814040636011e748e50143)
+- refactor: switch to phpunit 10 [`574a8de`](https://github.com/loophp/service-alias-autoregister-bundle/commit/574a8de5718ade63e42d1ce81babab7e1cf39ce4)
+- refactor: modernize code [`bab3db2`](https://github.com/loophp/service-alias-autoregister-bundle/commit/bab3db209b4ac084167298b182debac378ed111f)
+- chore(deps): add renovate.json [`35c3e8e`](https://github.com/loophp/service-alias-autoregister-bundle/commit/35c3e8e27e094adf46714750ad02233a38187583)
+
+## [1.0.0](https://github.com/loophp/service-alias-autoregister-bundle/compare/0.0.1...1.0.0) - 2022-02-04
+
+### Commits
+
+- docs: Update changelog. [`a577ef7`](https://github.com/loophp/service-alias-autoregister-bundle/commit/a577ef7e99567c7a95da720702f8e390897772d6)
 - chore: Update `.gitattributes`. [`0fbb634`](https://github.com/loophp/service-alias-autoregister-bundle/commit/0fbb634795fab851bc26df4d77456d540b88efee)
 - tests: Update PHPUnit stuff. [`3effb39`](https://github.com/loophp/service-alias-autoregister-bundle/commit/3effb3960c5bc037f2a89ace10924a8ba5c17c0d)
 - tests: Update integration tests. [`52ab45a`](https://github.com/loophp/service-alias-autoregister-bundle/commit/52ab45a26e87bc5af0b2be63dccc761d8e53bfcd)
