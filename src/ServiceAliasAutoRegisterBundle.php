@@ -16,4 +16,5 @@ final class ServiceAliasAutoRegisterBundle extends Bundle
 
         $container->addCompilerPass(new ServiceAliasAutoRegisterPass());
     }
+
 }
