@@ -20,9 +20,9 @@
         "ext-pcov": "*",
         "drupol/php-conventions": "^6",
         "phpunit/phpunit": "^11",
-        "symfony/dependency-injection": "^6",
-        "symfony/framework-bundle": "^6",
-        "symfony/http-kernel": "^6",
+        "symfony/dependency-injection": "^7",
+        "symfony/framework-bundle": "^7",
+        "symfony/http-kernel": "^7",
         "symfony/test-pack": "^1.0"
     },
     "autoload": {
