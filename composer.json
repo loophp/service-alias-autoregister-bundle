@@ -19,7 +19,7 @@
     "require-dev": {
         "ext-pcov": "*",
         "drupol/php-conventions": "^6",
-        "phpunit/phpunit": "^10",
+        "phpunit/phpunit": "^11",
         "symfony/dependency-injection": "^6",
         "symfony/framework-bundle": "^6",
         "symfony/http-kernel": "^6",
